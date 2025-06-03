@@ -1,6 +1,7 @@
 using Game;
 using Game.Board;
 using Game.Defender;
+using Game.Tiles;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -9,14 +10,14 @@ namespace Draggable
     [RequireComponent(typeof(Collider2D))]
     public class DraggableItem : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IDragHandler
     {
+        [SerializeField] private Defender defender;
+        
         private Collider2D _collider;
 
-        private Tile _tile;
+        private Tile tile;
 
         public Vector3 initialPos;
-
-        [SerializeField] private Defender defender;
-
+        
         private void Awake()
         {
             _collider = GetComponent<Collider2D>();
@@ -26,11 +27,11 @@ namespace Draggable
         public void OnPointerDown(PointerEventData eventData)
         {
             _collider.enabled = false;
-            if (_tile != null)
+            if (tile != null)
             {
-                _tile.IsEmpty = true;
-                _tile.ContainsDefender = false;
-                _tile = null;
+                tile.ChangeState(typeof(EmptyTileState));
+                tile.ContainsDefender = false;
+                tile = null;
             }
         }
 
@@ -42,13 +43,13 @@ namespace Draggable
             if (closestTile != null)
             {
                 transform.position = closestTile.transform.position;
-                closestTile.IsEmpty = false;
+                closestTile.ChangeState(typeof(NonEmptyTileState));
                 closestTile.ContainsDefender = true;
-                _tile = closestTile;
+                tile = closestTile;
             }
             else
             {
-                _tile = null;
+                tile = null;
                 transform.position = initialPos;
             }
         }
