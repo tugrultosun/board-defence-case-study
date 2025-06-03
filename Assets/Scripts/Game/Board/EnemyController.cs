@@ -10,6 +10,8 @@ namespace Game.Board
 {
     public class EnemyController
     {
+
+        private List<Enemy.Enemy> enemies = new List<Enemy.Enemy>();
         public async Task InitializeEnemies(List<EnemyLevelData> currentLevelEnemyLevelData)
         {
             var handle = Addressables.LoadAssetAsync<GameObject>("enemy");
@@ -30,6 +32,17 @@ namespace Game.Board
             {
                 Debug.LogError($"Failed to load enemy");
             }
+        }
+
+        public bool Remove(Enemy.Enemy enemy)
+        {
+            enemies.Remove(enemy);
+            if (enemies.Count <= 0)
+            {
+                return true;
+            }
+
+            return false;
         }
     }
 }

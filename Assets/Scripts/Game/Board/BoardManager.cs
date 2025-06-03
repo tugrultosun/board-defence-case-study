@@ -66,5 +66,14 @@ namespace Game.Board
 
             return null;
         }
+
+        public void RemoveEnemy(Enemy.Enemy enemy)
+        {
+            bool enemyDoesntLeft = enemyController.Remove(enemy);
+            if(enemyDoesntLeft)
+            {
+                EventManager.Instance.TriggerEvent<GameFinishedEvent>(new GameFinishedEvent{IsWin = true});
+            }
+        }
     }
 }
