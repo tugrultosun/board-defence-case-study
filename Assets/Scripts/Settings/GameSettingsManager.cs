@@ -25,5 +25,20 @@ namespace Settings
                     return null;
             }
         }
+
+        public DefenderDataModel GetDefender(DefenderType defenderType)
+        {
+            switch (defenderType)
+            {
+                case DefenderType.Defender1:
+                    return defenderSettings.defenderData1;
+                case DefenderType.Defender2:
+                    return defenderSettings.defenderData2;
+                case DefenderType.Defender3:
+                    return defenderSettings.defenderData3;
+                default:
+                    return null;
+            }
+        }
     }
 }

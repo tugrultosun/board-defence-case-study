@@ -48,6 +48,7 @@ namespace Game.Board
             enemyController = new EnemyController();
             await enemyController.InitializeEnemies(GameManager.Instance.currentLevel.EnemyLevelData);
             defenceController = new DefenceController();
+            await defenceController.InitializeDefenders(GameManager.Instance.currentLevel.DefenderLevelData);
         }
 
 
