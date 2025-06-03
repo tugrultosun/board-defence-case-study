@@ -14,6 +14,7 @@ namespace Game
         {
             xCoord = x;
             yCoord = y;
+            IsEmpty = true;
             name = "Tile x:" + xCoord + " y:" + yCoord;
         }
     }
