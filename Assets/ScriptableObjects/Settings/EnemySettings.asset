@@ -13,11 +13,14 @@ MonoBehaviour:
   m_Name: EnemySettings
   m_EditorClassIdentifier: 
   enemyData1:
+    enemyType: 0
     health: 3
     speed: 1
   enemyData2:
+    enemyType: 1
     health: 10
     speed: 0.25
   enemyData3:
+    enemyType: 2
     health: 5
     speed: 0.5

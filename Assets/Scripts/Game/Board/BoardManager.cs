@@ -1,5 +1,7 @@
 using System;
+using Events;
 using Game.Controllers;
+using Managers;
 using Settings;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -13,12 +15,17 @@ namespace Game.Board
         private Tile[,] tiles;
         
         private CameraController cameraController;
+
+        private EnemyController enemyController;
+        
+        private DefenceController defenceController;
         
         private void Awake()
         {
             InitializeTiles();
             cameraController = new CameraController();
             cameraController.Initialize();
+            EventManager.Instance.AddListener<LevelDataLoadedEvent>(OnLevelDataLoaded);
         }
 
         private void InitializeTiles()
@@ -34,6 +41,19 @@ namespace Game.Board
                     tile.Init(i,j);
                 }
             }
+        }
+
+        private void OnLevelDataLoaded(object e)
+        {
+            enemyController = new EnemyController();
+            enemyController.InitializeEnemies(GameManager.Instance.currentLevel.EnemyLevelData);
+            defenceController = new DefenceController();
+        }
+
+
+        private void OnDestroy()
+        {
+            EventManager.Instance.RemoveListener<LevelDataLoadedEvent>(OnLevelDataLoaded);
         }
     }
 }
