@@ -1,4 +1,4 @@
-namespace Enemy
+namespace Game.Enemy
 {
     [System.Serializable]
     public class EnemyDataModel 

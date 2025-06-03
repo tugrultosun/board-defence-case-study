@@ -1,4 +1,4 @@
-namespace Defender
+namespace Game.Defender
 {
     [System.Serializable]
     public class DefenderLevelData

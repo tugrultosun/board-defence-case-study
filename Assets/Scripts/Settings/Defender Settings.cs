@@ -1,4 +1,4 @@
-using Defender;
+using Game.Defender;
 using UnityEngine;
 
 namespace Settings
