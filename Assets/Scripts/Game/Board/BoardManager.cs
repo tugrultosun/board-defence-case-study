@@ -43,10 +43,10 @@ namespace Game.Board
             }
         }
 
-        private void OnLevelDataLoaded(object e)
+        private async void OnLevelDataLoaded(object e)
         {
             enemyController = new EnemyController();
-            enemyController.InitializeEnemies(GameManager.Instance.currentLevel.EnemyLevelData);
+            await enemyController.InitializeEnemies(GameManager.Instance.currentLevel.EnemyLevelData);
             defenceController = new DefenceController();
         }
 
