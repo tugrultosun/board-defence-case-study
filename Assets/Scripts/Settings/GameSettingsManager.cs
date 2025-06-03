@@ -1,11 +1,9 @@
-using System.Collections;
-using System.Collections.Generic;
-using Settings;
-using UnityEditor;
-using UnityEngine;
-
-public class GameSettingsManager : MonoSingleton<GameSettingsManager>
+namespace Settings
 {
-    public DefenderSettings defenderSettings;
-    public EnemySettings enemySettings;
+    public class GameSettingsManager : MonoSingleton<GameSettingsManager>
+    {
+        public DefenderSettings defenderSettings;
+        public EnemySettings enemySettings;
+        public BoardSettings boardSettings;
+    }
 }
