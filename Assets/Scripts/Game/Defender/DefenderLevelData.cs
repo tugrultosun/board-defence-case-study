@@ -1,6 +1,8 @@
+using System;
+
 namespace Game.Defender
 {
-    [System.Serializable]
+    [Serializable]
     public class DefenderLevelData
     {
         public DefenderType defenderType;

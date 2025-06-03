@@ -7,5 +7,6 @@ namespace Settings
     {
         public int width;
         public int height;
+        public int defenceItemMaxPlacebleYIndex;
     }
 }

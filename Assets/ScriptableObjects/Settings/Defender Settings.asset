@@ -13,16 +13,19 @@ MonoBehaviour:
   m_Name: Defender Settings
   m_EditorClassIdentifier: 
   defenderData1:
+    defenderType: 0
     damage: 3
     range: 4
     attackRate: 3
     direction: 0
   defenderData2:
+    defenderType: 1
     damage: 5
     range: 2
     attackRate: 4
     direction: 0
   defenderData3:
+    defenderType: 2
     damage: 10
     range: 1
     attackRate: 5

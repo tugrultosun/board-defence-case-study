@@ -1,6 +1,8 @@
+using System;
+
 namespace Game.Enemy
 {
-    [System.Serializable]
+    [Serializable]
     public class EnemyLevelData
     {
         public EnemyType enemyType;

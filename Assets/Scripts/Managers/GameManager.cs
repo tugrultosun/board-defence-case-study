@@ -3,6 +3,7 @@ using Levels;
 using Save;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
+using UnityEngine.ResourceManagement.AsyncOperations;
 
 namespace Managers
 {
@@ -11,7 +12,7 @@ namespace Managers
         public LevelData currentLevel;
 
         private SaveManager saveManager;
-    
+
         public override void Awake()
         {
             base.Awake();
@@ -21,10 +22,10 @@ namespace Managers
 
         private async void LoadLevelData()
         {
-            LevelEntity levelEntity = saveManager.LoadLevel();
-            var handle= Addressables.LoadAssetAsync<LevelData>("Level" + levelEntity.Level);
+            var levelEntity = saveManager.LoadLevel();
+            var handle = Addressables.LoadAssetAsync<LevelData>("Level" + levelEntity.Level);
             await handle.Task;
-            if (handle.Status == UnityEngine.ResourceManagement.AsyncOperations.AsyncOperationStatus.Succeeded)
+            if (handle.Status == AsyncOperationStatus.Succeeded)
             {
                 currentLevel = handle.Result;
                 Debug.Log($"Loaded Level: {currentLevel.name}");

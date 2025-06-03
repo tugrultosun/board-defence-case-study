@@ -1,45 +1,49 @@
-using System;
 using Events;
 using Game.Controllers;
 using Managers;
 using Settings;
-using Unity.VisualScripting;
 using UnityEngine;
 
 namespace Game.Board
 {
-    public class BoardManager : MonoBehaviour
+    public class BoardManager : MonoSingleton<BoardManager>
     {
         public Tile tilePrefab;
-        
-        private Tile[,] tiles;
-        
+
         private CameraController cameraController;
 
-        private EnemyController enemyController;
-        
         private DefenceController defenceController;
-        
-        private void Awake()
+
+        private EnemyController enemyController;
+
+        private Tile[,] tiles;
+
+        public override void Awake()
         {
+            base.Awake();
             InitializeTiles();
             cameraController = new CameraController();
             cameraController.Initialize();
             EventManager.Instance.AddListener<LevelDataLoadedEvent>(OnLevelDataLoaded);
         }
 
+
+        private void OnDestroy()
+        {
+            EventManager.Instance.RemoveListener<LevelDataLoadedEvent>(OnLevelDataLoaded);
+        }
+
         private void InitializeTiles()
         {
-            tiles = new Tile[GameSettingsManager.Instance.boardSettings.width, GameSettingsManager.Instance.boardSettings.height];
-            for (int i = 0; i < GameSettingsManager.Instance.boardSettings.width; i++)
+            tiles = new Tile[GameSettingsManager.Instance.boardSettings.width,
+                GameSettingsManager.Instance.boardSettings.height];
+            for (var i = 0; i < GameSettingsManager.Instance.boardSettings.width; i++)
+            for (var j = 0; j < GameSettingsManager.Instance.boardSettings.height; j++)
             {
-                for (int j = 0; j < GameSettingsManager.Instance.boardSettings.height; j++)
-                {
-                    Tile tile = GameObject.Instantiate(tilePrefab,transform);
-                    tile.transform.position = new Vector3(i, j);
-                    tiles[i, j] = tile;
-                    tile.Init(i,j);
-                }
+                var tile = Instantiate(tilePrefab, transform);
+                tile.transform.position = new Vector3(i, j);
+                tiles[i, j] = tile;
+                tile.Init(i, j);
             }
         }
 
@@ -52,9 +56,15 @@ namespace Game.Board
         }
 
 
-        private void OnDestroy()
+        public Tile GetClosestTileForDroppingDefender(Vector2 mousePos)
         {
-            EventManager.Instance.RemoveListener<LevelDataLoadedEvent>(OnLevelDataLoaded);
+            for (var i = 0; i < GameSettingsManager.Instance.boardSettings.width; i++)
+            for (var j = 0; j < GameSettingsManager.Instance.boardSettings.height; j++)
+                if (Vector2.Distance(mousePos, tiles[i, j].transform.position) < 0.5f &&
+                    j <= GameSettingsManager.Instance.boardSettings.defenceItemMaxPlacebleYIndex && tiles[i, j].IsEmpty)
+                    return tiles[i, j];
+
+            return null;
         }
     }
 }

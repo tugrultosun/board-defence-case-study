@@ -1,7 +1,6 @@
 namespace Events
 {
-    public class LevelDataLoadedEvent 
+    public class LevelDataLoadedEvent
     {
-    
     }
 }
