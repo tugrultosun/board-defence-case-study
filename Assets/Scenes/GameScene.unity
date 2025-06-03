@@ -726,6 +726,14 @@ MonoBehaviour:
       Value: {fileID: 21300000, guid: d9b04c28bbd2106439f35a925620a8d4, type: 3}
     - Key: 2
       Value: {fileID: 21300000, guid: 98628ffcea5e39f429c3431b440ce156, type: 3}
+  defenderSprites:
+    _serializedList:
+    - Key: 0
+      Value: {fileID: 21300000, guid: f9798f619b29254468daaf6d58c40499, type: 3}
+    - Key: 1
+      Value: {fileID: 21300000, guid: b9a9411a3a8a906418fd6edf17e4fd29, type: 3}
+    - Key: 2
+      Value: {fileID: 21300000, guid: 83fa619870e1abc48859ea600caf8988, type: 3}
 --- !u!1001 &2079753310153131892
 PrefabInstance:
   m_ObjectHideFlags: 0
