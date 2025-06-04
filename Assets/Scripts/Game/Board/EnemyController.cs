@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Game.Enemy;
+using Game.Enemies;
 using Lean.Pool;
 using Settings;
 using UnityEngine;
@@ -10,9 +10,9 @@ namespace Game.Board
 {
     public class EnemyController
     {
-
-        public List<Enemy.Enemy> Enemies => enemies;
-        private List<Enemy.Enemy> enemies = new List<Enemy.Enemy>();
+        public List<Enemy> Enemies => enemies;
+        
+        private List<Enemy> enemies = new List<Enemy>();
         public async Task InitializeEnemies(List<EnemyLevelData> currentLevelEnemyLevelData)
         {
             var handle = Addressables.LoadAssetAsync<GameObject>("enemy");
@@ -24,7 +24,7 @@ namespace Game.Board
                 {
                     for (int i = 0; i < enemyLevelData.count; i++)
                     {
-                        var enemy = LeanPool.Spawn<Enemy.Enemy>(enemyPrefab.GetComponent<Enemy.Enemy>());
+                        var enemy = LeanPool.Spawn<Enemy>(enemyPrefab.GetComponent<Enemy>());
                         enemy.Initialize(GameSettingsManager.Instance.GetEnemy(enemyLevelData.enemyType));
                     }
                 }
@@ -36,7 +36,7 @@ namespace Game.Board
             }
         }
 
-        public bool Remove(Enemy.Enemy enemy)
+        public bool Remove(Enemy enemy)
         {
             enemies.Remove(enemy);
             if (enemies.Count <= 0)

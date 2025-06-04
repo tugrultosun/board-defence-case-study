@@ -3,7 +3,7 @@ using Lean.Pool;
 using Managers;
 using UnityEngine;
 
-namespace Game.Enemy
+namespace Game.Enemies
 {
     public class Enemy : MonoBehaviour , IEnemy
     {

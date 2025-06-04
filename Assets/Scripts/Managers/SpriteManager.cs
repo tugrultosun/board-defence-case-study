@@ -1,6 +1,6 @@
 using AYellowpaper.SerializedCollections;
 using Game.Defender;
-using Game.Enemy;
+using Game.Enemies;
 using UnityEngine;
 
 namespace Managers

@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using Game.Defender;
-using Game.Enemy;
+using Game.Enemies;
 using UnityEngine;
 
 namespace Levels

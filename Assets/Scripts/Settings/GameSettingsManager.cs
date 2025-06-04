@@ -1,6 +1,6 @@
 using System;
 using Game.Defender;
-using Game.Enemy;
+using Game.Enemies;
 
 namespace Settings
 {

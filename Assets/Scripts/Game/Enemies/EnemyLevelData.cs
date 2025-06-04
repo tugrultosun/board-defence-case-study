@@ -1,6 +1,6 @@
 using System;
 
-namespace Game.Enemy
+namespace Game.Enemies
 {
     [Serializable]
     public class EnemyLevelData

@@ -1,6 +1,7 @@
 using Events;
 using Game.Controllers;
 using Game.Tiles;
+using Game.Enemies;
 using Managers;
 using Settings;
 using UnityEngine;
@@ -69,7 +70,7 @@ namespace Game.Board
             return null;
         }
 
-        public void RemoveEnemy(Enemy.Enemy enemy)
+        public void RemoveEnemy(Enemy enemy)
         {
             bool enemyDoesntLeft = EnemyController.Remove(enemy);
             if(enemyDoesntLeft)

@@ -1,4 +1,4 @@
-namespace Game.Enemy
+namespace Game.Enemies
 {
     public interface IEnemy
     {

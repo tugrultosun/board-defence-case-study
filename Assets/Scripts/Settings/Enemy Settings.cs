@@ -1,4 +1,4 @@
-using Game.Enemy;
+using Game.Enemies;
 using UnityEngine;
 
 namespace Settings
