@@ -1,3 +1,4 @@
+using System;
 using Game.Board;
 using Lean.Pool;
 using Managers;
@@ -11,6 +12,7 @@ namespace Game.Enemies
         public EnemyType EnemyType { get; set; }
         public int Health { get; set; }
         public float Speed { get; set; }
+        public bool CanMove { get; set; }
 
         public void Initialize(EnemyDataModel enemyDataModel)
         {
@@ -18,6 +20,7 @@ namespace Game.Enemies
             EnemyType = enemyDataModel.enemyType;
             Health = enemyDataModel.health;
             Speed = enemyDataModel.speed;
+            CanMove = true;// can be changed based on events or other things
         }
 
         public void ApplyDamage(int damage)
@@ -29,6 +32,19 @@ namespace Game.Enemies
                 BoardManager.Instance.RemoveEnemy(this);
                 LeanPool.Despawn(gameObject);
             }
+        }
+
+        public void Move()
+        {
+            if (CanMove)
+            {
+                transform.Translate(Vector3.down * Speed * Time.deltaTime);
+            }
+        }
+
+        private void Update()
+        {
+            Move();
         }
     }
 }
