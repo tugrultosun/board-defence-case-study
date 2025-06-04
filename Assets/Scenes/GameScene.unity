@@ -292,6 +292,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 63b73b2c84b324e439ba41cf0490cc33, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  boardCamera: {fileID: 519420031}
   tilePrefab: {fileID: -1775193338564638742, guid: 220accc56d24dda40b20cadc0d629181, type: 3}
 --- !u!1 &446241556
 GameObject:

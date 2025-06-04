@@ -7,11 +7,11 @@ namespace Game.Controllers
     {
         private Camera mainCamera;
 
-        public void Initialize()
+        public void Initialize(Camera boardCamera)
         {
+            this.mainCamera = boardCamera;
             var x = GameSettingsManager.Instance.boardSettings.width;
             var y = GameSettingsManager.Instance.boardSettings.height;
-            mainCamera = Camera.main;
             var pos = new Vector3(x / 2.0f - 0.5f, y / 2.0f - 0.5f, -10.0f);
             var aspectRatio = (float)Screen.width / Screen.height;
             var height = (float)y;
@@ -21,7 +21,13 @@ namespace Game.Controllers
             {
                 mainCamera.transform.position += new Vector3(pos.x, pos.y, 0);
                 mainCamera.orthographicSize = orthographicSize;
+                Debug.Log("camera initialized");
             }
+            else
+            {
+                Debug.LogWarning("Main camera is null");
+            }
+            
         }
     }
 }

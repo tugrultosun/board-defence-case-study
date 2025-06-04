@@ -9,6 +9,7 @@ namespace Game.Board
 {
     public class BoardManager : MonoSingleton<BoardManager>
     {
+        [SerializeField] private Camera boardCamera;
         public Tile tilePrefab;
 
         private CameraController cameraController;
@@ -24,7 +25,7 @@ namespace Game.Board
             base.Awake();
             InitializeTiles();
             cameraController = new CameraController();
-            cameraController.Initialize();
+            cameraController.Initialize(boardCamera);
             EventManager.Instance.AddListener<LevelDataLoadedEvent>(OnLevelDataLoaded);
         }
 
