@@ -8,14 +8,14 @@ namespace Game.Enemy
     public class Enemy : MonoBehaviour , IEnemy
     {
         [SerializeField] private SpriteRenderer spriteRenderer;
-        
+        public EnemyType EnemyType { get; set; }
         public int Health { get; set; }
-        
         public float Speed { get; set; }
 
         public void Initialize(EnemyDataModel enemyDataModel)
         {
             spriteRenderer.sprite = SpriteManager.Instance.GetEnemySprite(enemyDataModel.enemyType);
+            EnemyType = enemyDataModel.enemyType;
             Health = enemyDataModel.health;
             Speed = enemyDataModel.speed;
         }

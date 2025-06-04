@@ -9,5 +9,6 @@ namespace Settings
         public int height;
         public int defenceItemMaxPlacebleYIndex;
         public float defenderPlacementThreshold;
+        public float defenderAttackThreshold;
     }
 }

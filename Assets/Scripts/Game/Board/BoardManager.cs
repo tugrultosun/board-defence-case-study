@@ -14,8 +14,8 @@ namespace Game.Board
         private CameraController cameraController;
 
         private DefenceController defenceController;
-
-        private EnemyController enemyController;
+        
+        public EnemyController EnemyController { get; private set; }
 
         private Tile[,] tiles;
 
@@ -50,8 +50,8 @@ namespace Game.Board
 
         private async void OnLevelDataLoaded(object e)
         {
-            enemyController = new EnemyController();
-            await enemyController.InitializeEnemies(GameManager.Instance.currentLevel.EnemyLevelData);
+            EnemyController = new EnemyController();
+            await EnemyController.InitializeEnemies(GameManager.Instance.currentLevel.EnemyLevelData);
             defenceController = new DefenceController();
             await defenceController.InitializeDefenders(GameManager.Instance.currentLevel.DefenderLevelData);
         }
@@ -70,7 +70,7 @@ namespace Game.Board
 
         public void RemoveEnemy(Enemy.Enemy enemy)
         {
-            bool enemyDoesntLeft = enemyController.Remove(enemy);
+            bool enemyDoesntLeft = EnemyController.Remove(enemy);
             if(enemyDoesntLeft)
             {
                 EventManager.Instance.TriggerEvent<GameFinishedEvent>(new GameFinishedEvent{IsWin = true});

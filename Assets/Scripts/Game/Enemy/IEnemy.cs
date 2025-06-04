@@ -2,6 +2,7 @@ namespace Game.Enemy
 {
     public interface IEnemy
     {
+        public EnemyType EnemyType { get; set; }
         public int Health { get; set; }
         
         public float Speed { get; set; }

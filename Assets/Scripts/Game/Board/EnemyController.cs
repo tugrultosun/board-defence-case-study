@@ -11,6 +11,7 @@ namespace Game.Board
     public class EnemyController
     {
 
+        public List<Enemy.Enemy> Enemies => enemies;
         private List<Enemy.Enemy> enemies = new List<Enemy.Enemy>();
         public async Task InitializeEnemies(List<EnemyLevelData> currentLevelEnemyLevelData)
         {
