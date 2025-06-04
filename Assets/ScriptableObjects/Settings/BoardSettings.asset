@@ -16,3 +16,4 @@ MonoBehaviour:
   height: 8
   defenceItemMaxPlacebleYIndex: 3
   defenderPlacementThreshold: 0.5
+  defenderAttackThreshold: 0.01
