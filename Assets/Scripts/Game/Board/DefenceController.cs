@@ -27,6 +27,7 @@ namespace Game.Board
                         defender.transform.position = new Vector3((int)defenderLevelData.defenderType, -1, 0);
                         defender.GetComponent<DraggableItem>().initialPos = defender.transform.position;
                     }
+                Addressables.Release(handle);
             }
             else
             {

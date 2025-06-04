@@ -27,6 +27,7 @@ namespace Game.Board
                         enemy.Initialize(GameSettingsManager.Instance.GetEnemy(enemyLevelData.enemyType));
                     }
                 }
+                Addressables.Release(handle);
             }
             else
             {
