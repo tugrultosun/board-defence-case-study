@@ -7,9 +7,21 @@ namespace Game.Defender
     {
         [SerializeField] private SpriteRenderer spriteRenderer;
 
+        public bool CanAttack { get; set; }
+
         public void Initialize(DefenderDataModel defenderDataModel)
         {
             spriteRenderer.sprite = SpriteManager.Instance.GetDefenderSprite(defenderDataModel.defenderType);
+        }
+
+        public void Activate()
+        {
+            CanAttack = true;
+        }
+
+        public void Deactivate()
+        {
+            CanAttack = false;
         }
     }
 }

@@ -14,7 +14,7 @@ namespace Draggable
         
         private Collider2D _collider;
 
-        private Tile tile;
+        private Tile assignedTile;
 
         public Vector3 initialPos;
         
@@ -27,11 +27,11 @@ namespace Draggable
         public void OnPointerDown(PointerEventData eventData)
         {
             _collider.enabled = false;
-            if (tile != null)
+            if (assignedTile != null)
             {
-                tile.ChangeState(typeof(EmptyTileState));
-                tile.ContainsDefender = false;
-                tile = null;
+                assignedTile.ChangeState(typeof(EmptyTileState));
+                assignedTile = null;
+                defender.Deactivate();
             }
         }
 
@@ -44,13 +44,14 @@ namespace Draggable
             {
                 transform.position = closestTile.transform.position;
                 closestTile.ChangeState(typeof(NonEmptyTileState));
-                closestTile.ContainsDefender = true;
-                tile = closestTile;
+                assignedTile = closestTile;
+                defender.Activate();
             }
             else
             {
-                tile = null;
+                assignedTile = null;
                 transform.position = initialPos;
+                defender.Deactivate();
             }
         }
 
