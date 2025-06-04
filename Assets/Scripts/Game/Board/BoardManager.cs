@@ -61,7 +61,7 @@ namespace Game.Board
         {
             for (var i = 0; i < GameSettingsManager.Instance.boardSettings.width; i++)
             for (var j = 0; j < GameSettingsManager.Instance.boardSettings.height; j++)
-                if (Vector2.Distance(mousePos, tiles[i, j].transform.position) < 0.5f &&
+                if (Vector2.Distance(mousePos, tiles[i, j].transform.position) < GameSettingsManager.Instance.boardSettings.defenderPlacementThreshold &&
                     j <= GameSettingsManager.Instance.boardSettings.defenceItemMaxPlacebleYIndex && tiles[i, j].GetTileState() == typeof(EmptyTileState))
                     return tiles[i, j];
 
