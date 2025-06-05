@@ -73,13 +73,8 @@ namespace Game.Defender
             var projectileComponent = projectileGo.GetComponent<Projectile>();
             if (projectileComponent != null)
             {
-                projectileComponent.Initialize(DefenderType);
+                projectileComponent.Initialize(DefenderType,Damage,enemy);
                 projectileGo.transform.position = transform.position;
-                projectileGo.transform.DOMove(enemy.transform.position, 0.5f).SetEase(Ease.InOutSine).OnComplete(() =>
-                {
-                    enemy.ApplyDamage(Damage);
-                    LeanPool.Despawn(projectileGo);
-                });
             }
             StartCoroutine(ApplyCooldown());
         }
