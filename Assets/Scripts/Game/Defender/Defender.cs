@@ -1,4 +1,9 @@
+using System.Collections;
+using DG.Tweening;
 using Game.Board;
+using Game.Enemies;
+using Game.Projectiles;
+using Lean.Pool;
 using Managers;
 using Settings;
 using UnityEngine;
@@ -9,6 +14,7 @@ namespace Game.Defender
     {
         [SerializeField] private SpriteRenderer spriteRenderer;
         
+        [SerializeField] private GameObject projectilePrefab;
         public DefenderType DefenderType { get; set; }
         public int Damage { get; set; }
         public int Range { get; set; }
@@ -42,7 +48,6 @@ namespace Game.Defender
             {
                 for(int i = 0 ; i < BoardManager.Instance.EnemyController.Enemies.Count ; i++)
                 {
-                
                     var distanceToEnemy = Vector2.Distance(transform.position,BoardManager.Instance.EnemyController.Enemies[i].transform.position);
                     if(distanceToEnemy <= Range)
                     {
@@ -50,16 +55,40 @@ namespace Game.Defender
                         {
                             Debug.Log($"defender :{DefenderType} is attacking direction{AttackDirection} with dmg {Damage}");
                             Debug.Log($"defender x:{transform.position.x} enemy x: {BoardManager.Instance.EnemyController.Enemies[i].transform.position.x}");
-                            BoardManager.Instance.EnemyController.Enemies[i].ApplyDamage(Damage);
+                            Shoot(BoardManager.Instance.EnemyController.Enemies[i]);
                         }
                         else if(AttackDirection == DefenderAttackDirection.AllDirection)
                         {
                             Debug.Log($"defender :{DefenderType} is attacking direction{AttackDirection} with dmg {Damage}");
-                            BoardManager.Instance.EnemyController.Enemies[i].ApplyDamage(Damage);
+                            Shoot(BoardManager.Instance.EnemyController.Enemies[i]);
                         }
                     }
                 }
             }
+        }
+
+        private void Shoot(Enemy enemy)
+        {
+            var projectileGo = LeanPool.Spawn(projectilePrefab);
+            var projectileComponent = projectileGo.GetComponent<Projectile>();
+            if (projectileComponent != null)
+            {
+                projectileComponent.Initialize(DefenderType);
+                projectileGo.transform.position = transform.position;
+                projectileGo.transform.DOMove(enemy.transform.position, 0.5f).SetEase(Ease.InOutSine).OnComplete(() =>
+                {
+                    enemy.ApplyDamage(Damage);
+                    LeanPool.Despawn(projectileGo);
+                });
+            }
+            StartCoroutine(ApplyCooldown());
+        }
+
+        private IEnumerator ApplyCooldown()
+        {
+            CanAttack = false;
+            yield return new WaitForSeconds(AttackRate);
+            CanAttack = true;
         }
     }
 }
