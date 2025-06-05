@@ -11,7 +11,7 @@ namespace Game.Enemies
     {
         [SerializeField] private SpriteRenderer spriteRenderer;
         
-        [SerializeField] private TextMeshPro hpText; 
+        [SerializeField] private TextMeshPro hpText;
         public EnemyType EnemyType { get; set; }
         public int Health { get; set; }
         public float Speed { get; set; }
@@ -32,9 +32,13 @@ namespace Game.Enemies
             Health -= damage;
             hpText.SetText(Health.ToString());
             Debug.Log("defender attacked, enemy hp is now:" + Health);
+            var hitParticleSystem = ParticleManager.Instance.GetHitParticles();
+            hitParticleSystem.transform.position = transform.position;
             if (Health <= 0)
             {
                 BoardManager.Instance.RemoveEnemy(this);
+                var explodeParticleSystem = ParticleManager.Instance.GetExplodeParticles();
+                explodeParticleSystem.transform.position = transform.position;
                 LeanPool.Despawn(gameObject);
             }
         }

@@ -750,6 +750,52 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!1 &959909639
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 959909641}
+  - component: {fileID: 959909640}
+  m_Layer: 0
+  m_Name: ParticleManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &959909640
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 959909639}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b4b9896c254d635449279bc358f7b99c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  explodeParticles: {fileID: 2433282508523890284, guid: 3ef3ae421f71c5c4e97fe12dc2fc6312, type: 3}
+  hitParticles: {fileID: 4021103657954561960, guid: 5c755f9bc5253ea418e919994537dcc7, type: 3}
+--- !u!4 &959909641
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 959909639}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 3.0897605, y: 7.078568, z: 0.0009339507}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1920040718
 GameObject:
   m_ObjectHideFlags: 0
@@ -809,7 +855,7 @@ MonoBehaviour:
     - Key: 1
       Value: {fileID: 21300000, guid: b9a9411a3a8a906418fd6edf17e4fd29, type: 3}
     - Key: 2
-      Value: {fileID: 21300000, guid: 83fa619870e1abc48859ea600caf8988, type: 3}
+      Value: {fileID: 21300000, guid: bae71327d13b8404bac8cd9ea5873b3b, type: 3}
   projectileSprites:
     _serializedList:
     - Key: 0
@@ -927,3 +973,4 @@ SceneRoots:
   - {fileID: 1920040719}
   - {fileID: 164417017}
   - {fileID: 235473626}
+  - {fileID: 959909641}
