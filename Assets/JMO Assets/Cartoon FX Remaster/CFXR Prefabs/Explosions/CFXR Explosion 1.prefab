@@ -106,6 +106,7 @@ GameObject:
   - component: {fileID: 2433282508523890284}
   - component: {fileID: 2433282508523921356}
   - component: {fileID: 2883620193154939874}
+  - component: {fileID: 2418688342749980752}
   m_Layer: 0
   m_Name: CFXR Explosion 1
   m_TagString: Untagged
@@ -144,7 +145,7 @@ ParticleSystem:
   serializedVersion: 8
   lengthInSec: 2.5
   simulationSpeed: 1
-  stopAction: 0
+  stopAction: 3
   cullingMode: 1
   ringBufferMode: 0
   ringBufferLoopRange: {x: 0, y: 1}
@@ -4878,7 +4879,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9205bc1bbacc90040a998067b5643d16, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  clearBehavior: 2
+  clearBehavior: 1
   cameraShake:
     enabled: 1
     useMainCamera: 1
@@ -5029,6 +5030,18 @@ MonoBehaviour:
     perlinColor: 0
     perlinColorSpeed: 1
   fadeOutReference: {fileID: 0}
+--- !u!114 &2418688342749980752
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2433282508537954060}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cafd08ed2743e1d4abb9afcc3f119974, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2433282508753476420
 GameObject:
   m_ObjectHideFlags: 0
