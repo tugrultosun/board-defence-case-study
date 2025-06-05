@@ -9,7 +9,7 @@ namespace Settings
         public DefenderSettings defenderSettings;
         public EnemySettings enemySettings;
         public BoardSettings boardSettings;
-
+        public ProjectileSettings projectileSettings;
 
         public EnemyDataModel GetEnemy(EnemyType enemyType)
         {

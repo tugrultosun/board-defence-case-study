@@ -306,6 +306,7 @@ MonoBehaviour:
   defenderSettings: {fileID: 11400000, guid: 8d041217d4d96844d9f199093cba845c, type: 2}
   enemySettings: {fileID: 11400000, guid: ff58680b4cfdc214abb176319ed2ba12, type: 2}
   boardSettings: {fileID: 11400000, guid: e1d4d65edd5ffe24285573fd79f0d9bb, type: 2}
+  projectileSettings: {fileID: 11400000, guid: c453277ee5459a84b8df6c6c7fc49ec7, type: 2}
 --- !u!1 &405728997
 GameObject:
   m_ObjectHideFlags: 0
