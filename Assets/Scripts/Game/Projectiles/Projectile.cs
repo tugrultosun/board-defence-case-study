@@ -26,16 +26,18 @@ namespace Game.Projectiles
         {
             if (target != null)
             {
-                Vector3 dir = (target.transform.position - transform.position).normalized;
-                transform.position += dir * GameSettingsManager.Instance.projectileSettings.projectileSpeed * Time.deltaTime;
-                var distance = Vector2.Distance(transform.position, target.transform.position);
+                Vector3 toTarget = target.transform.position - transform.position;
+                float distance = toTarget.magnitude;
                 if (distance <= GameSettingsManager.Instance.projectileSettings.projectileTargetReachedOffset)
                 {
                     target.ApplyDamage(damage);
                     LeanPool.Despawn(gameObject);
                     return;
                 }
-                float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg - 90f;
+                float moveStep = GameSettingsManager.Instance.projectileSettings.projectileSpeed * Time.deltaTime;
+                Vector3 move = toTarget.normalized * Mathf.Min(distance, moveStep);
+                transform.position += move;
+                float angle = Mathf.Atan2(move.y, move.x) * Mathf.Rad2Deg - 90f;
                 transform.rotation = Quaternion.Euler(0, 0, angle);
             }
         }
