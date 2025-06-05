@@ -10,5 +10,6 @@ namespace Settings
         public int defenceItemMaxPlacebleYIndex;
         public float defenderPlacementThreshold;
         public float defenderAttackThreshold;
+        public Vector3 boardSpawnOffset;
     }
 }

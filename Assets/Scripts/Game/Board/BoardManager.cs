@@ -70,6 +70,13 @@ namespace Game.Board
             return null;
         }
 
+        public Vector3 GetRandomUpmostTileSpawnPosition()
+        {
+            var randomColumn = Random.Range(0, GameSettingsManager.Instance.boardSettings.width);
+            var tilePos = tiles[randomColumn, GameSettingsManager.Instance.boardSettings.height - 1].transform.position;
+            return tilePos + GameSettingsManager.Instance.boardSettings.boardSpawnOffset;
+        }
+
         public void RemoveEnemy(Enemy enemy)
         {
             bool enemyDoesntLeft = EnemyController.Remove(enemy);

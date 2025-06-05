@@ -26,6 +26,9 @@ namespace Game.Board
                     {
                         var enemy = LeanPool.Spawn<Enemy>(enemyPrefab.GetComponent<Enemy>());
                         enemy.Initialize(GameSettingsManager.Instance.GetEnemy(enemyLevelData.enemyType));
+                        var randomSpawnPosition = BoardManager.Instance.GetRandomUpmostTileSpawnPosition();
+                        enemy.transform.position = randomSpawnPosition;
+                        enemies.Add(enemy);
                     }
                 }
                 Addressables.Release(handle);
