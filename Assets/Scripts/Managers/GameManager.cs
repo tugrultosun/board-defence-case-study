@@ -1,4 +1,6 @@
+using System;
 using Events;
+using Game.UI;
 using Levels;
 using Save;
 using UnityEngine;
@@ -9,6 +11,8 @@ namespace Managers
 {
     public class GameManager : MonoSingleton<GameManager>
     {
+        [SerializeField] private EndGameScreen endGameScreen;
+        
         public LevelData currentLevel;
 
         private SaveManager saveManager;
@@ -18,6 +22,7 @@ namespace Managers
             base.Awake();
             saveManager = new SaveManager();
             LoadLevelData();
+            EventManager.Instance.AddListener<GameFinishedEvent>(OnGameFinished);
         }
 
         private async void LoadLevelData()
@@ -35,6 +40,25 @@ namespace Managers
             {
                 Debug.LogError($"Failed to load level: {levelEntity.Level}");
             }
+        }
+
+        private void OnGameFinished(object e)
+        {
+            var gameFinishedEvent = (GameFinishedEvent)e;
+            if (gameFinishedEvent.IsWin)
+            {
+                endGameScreen.InitializeWinPanel();
+            }
+            else
+            {
+                endGameScreen.InitializeLosePanel();
+            }
+        }
+
+
+        private void OnDestroy()
+        {
+            EventManager.Instance.RemoveListener<GameFinishedEvent>(OnGameFinished);
         }
     }
 }
