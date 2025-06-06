@@ -48,7 +48,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spriteRenderer: {fileID: 3600081681918443447}
-  projectilePrefab: {fileID: 3419669989471385054, guid: a8275c01f250aa04c8d0db9864d50ff3, type: 3}
+  projectilePrefab: {fileID: -7769766381153286755, guid: a8275c01f250aa04c8d0db9864d50ff3, type: 3}
 --- !u!114 &2446112382791939725
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -102,7 +102,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -361500681
-  m_SortingLayer: 3
+  m_SortingLayer: 2
   m_SortingOrder: 0
   m_Sprite: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}

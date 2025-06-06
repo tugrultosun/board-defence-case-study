@@ -12,7 +12,7 @@ namespace Game.Defender
     {
         [SerializeField] private SpriteRenderer spriteRenderer;
         
-        [SerializeField] private GameObject projectilePrefab;
+        [SerializeField] private Projectile projectilePrefab;
         public DefenderType DefenderType { get; set; }
         public int Damage { get; set; }
         public int Range { get; set; }
@@ -75,13 +75,9 @@ namespace Game.Defender
 
         private void Shoot(Enemy enemy)
         {
-            var projectileGo = LeanPool.Spawn(projectilePrefab);
-            var projectileComponent = projectileGo.GetComponent<Projectile>();
-            if (projectileComponent != null)
-            {
-                projectileComponent.Initialize(DefenderType,Damage,enemy);
-                projectileGo.transform.position = transform.position;
-            }
+            var projectile = LeanPool.Spawn<Projectile>(projectilePrefab);
+            projectile.Initialize(DefenderType, Damage, enemy);
+            projectile.transform.position = transform.position;
             StartCoroutine(ApplyCooldown());
         }
 
