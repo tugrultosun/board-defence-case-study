@@ -1,11 +1,9 @@
 using System.Collections;
-using DG.Tweening;
 using Game.Board;
 using Game.Enemies;
 using Game.Projectiles;
 using Lean.Pool;
 using Managers;
-using Settings;
 using UnityEngine;
 
 namespace Game.Defender
@@ -21,6 +19,8 @@ namespace Game.Defender
         public int AttackRate { get; set; }
         public bool CanAttack { get; set; }
         public DefenderAttackDirection AttackDirection { get; set; }
+        
+        public IAttackStrategy Strategy { get; set; }
 
         public void Initialize(DefenderDataModel defenderDataModel)
         {
@@ -30,6 +30,21 @@ namespace Game.Defender
             Range = defenderDataModel.range;
             AttackRate = defenderDataModel.attackRate;
             AttackDirection = defenderDataModel.direction;
+            Strategy = GetStrategy(AttackDirection);
+        }
+
+        private IAttackStrategy GetStrategy(DefenderAttackDirection defenderAttackDirection)
+        {
+            switch (defenderAttackDirection)
+            {
+                case DefenderAttackDirection.ForwardDirection:
+                    return new ForwardAttackStrategy(Range);
+                case DefenderAttackDirection.AllDirection:
+                    return new AllDirectionAttackStrategy(Range);
+                default:
+                    Debug.LogWarning($"Defender strategy{defenderAttackDirection} not implemented");
+                    return new ForwardAttackStrategy(Range);
+            }
         }
 
         public void Activate()
@@ -48,20 +63,11 @@ namespace Game.Defender
             {
                 for(int i = 0 ; i < BoardManager.Instance.EnemyController.Enemies.Count ; i++)
                 {
-                    var distanceToEnemy = Vector2.Distance(transform.position,BoardManager.Instance.EnemyController.Enemies[i].transform.position);
-                    if(distanceToEnemy <= Range)
+                    Enemy enemy = BoardManager.Instance.EnemyController.Enemies[i];
+                    if(Strategy.ShouldAttack(transform,enemy.transform))
                     {
-                        if(AttackDirection == DefenderAttackDirection.ForwardDirection && Mathf.Abs(transform.position.x - BoardManager.Instance.EnemyController.Enemies[i].transform.position.x) < GameSettingsManager.Instance.boardSettings.defenderAttackThreshold)
-                        {
-                            Debug.Log($"defender :{DefenderType} is attacking direction{AttackDirection} with dmg {Damage}");
-                            Debug.Log($"defender x:{transform.position.x} enemy x: {BoardManager.Instance.EnemyController.Enemies[i].transform.position.x}");
-                            Shoot(BoardManager.Instance.EnemyController.Enemies[i]);
-                        }
-                        else if(AttackDirection == DefenderAttackDirection.AllDirection)
-                        {
-                            Debug.Log($"defender :{DefenderType} is attacking direction{AttackDirection} with dmg {Damage}");
-                            Shoot(BoardManager.Instance.EnemyController.Enemies[i]);
-                        }
+                        Debug.Log($"defender :{DefenderType} is attacking direction{AttackDirection} with dmg {Damage}");
+                        Shoot(BoardManager.Instance.EnemyController.Enemies[i]);
                     }
                 }
             }

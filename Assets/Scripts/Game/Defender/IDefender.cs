@@ -8,6 +8,7 @@ namespace Game.Defender
         public int AttackRate { get; set; }
         public bool CanAttack { get; set; }
         public DefenderAttackDirection AttackDirection { get; set; }
+        public IAttackStrategy Strategy { get; set; }
         public void Initialize(DefenderDataModel defenderDataModel);
         public void Activate();
         public void Deactivate();
