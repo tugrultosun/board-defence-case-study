@@ -23,7 +23,6 @@ namespace Game.Board
 
         public override void Awake()
         {
-            base.Awake();
             InitializeTiles();
             cameraController = new CameraController();
             cameraController.Initialize(boardCamera);

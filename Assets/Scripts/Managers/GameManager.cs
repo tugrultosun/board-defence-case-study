@@ -28,7 +28,8 @@ namespace Managers
         private async void LoadLevelData()
         {
             var levelEntity = saveManager.LoadLevel();
-            var handle = Addressables.LoadAssetAsync<LevelData>("Level" + levelEntity.Level);
+            int levelIndex = ((levelEntity.Level - 1) % 3) + 1; // just for wrapping level number between 1 and 3
+            var handle = Addressables.LoadAssetAsync<LevelData>("Level" + levelIndex);
             await handle.Task;
             if (handle.Status == AsyncOperationStatus.Succeeded)
             {
@@ -44,10 +45,12 @@ namespace Managers
 
         private void OnGameFinished(object e)
         {
+            Debug.LogWarning("Game finished event called");
             var gameFinishedEvent = (GameFinishedEvent)e;
             if (gameFinishedEvent.IsWin)
             {
                 endGameScreen.InitializeWinPanel();
+                saveManager.IncreaseLevel();
             }
             else
             {

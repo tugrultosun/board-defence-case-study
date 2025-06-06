@@ -407,7 +407,8 @@ MonoBehaviour:
   persist: 0
   stamp: 0
   warnings: 1
-  spawnedClonesList: []
+  spawnedClonesList:
+  - {fileID: 0}
   despawnedClones: []
   delays: []
   deactivatedChild: {fileID: 0}

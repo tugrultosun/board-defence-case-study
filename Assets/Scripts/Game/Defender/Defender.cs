@@ -67,7 +67,8 @@ namespace Game.Defender
                     if(Strategy.ShouldAttack(transform,enemy.transform))
                     {
                         Debug.Log($"defender :{DefenderType} is attacking direction{AttackDirection} with dmg {Damage}");
-                        Shoot(BoardManager.Instance.EnemyController.Enemies[i]);
+                        Shoot(enemy);
+                        break; //so dont attack anymore enemies
                     }
                 }
             }
