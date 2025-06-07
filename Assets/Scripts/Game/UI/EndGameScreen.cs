@@ -9,13 +9,14 @@ namespace Game.UI
     {
         [SerializeField] private CanvasGroup winScreen;
         [SerializeField] private CanvasGroup loseScreen;
-        [SerializeField] private Button mainMenuButton;
-
+        [SerializeField] private Button mainMenuButtonWinPanel;
+        [SerializeField] private Button mainMenuButtonLosePanel;
         private void Awake()
         {
             winScreen.gameObject.SetActive(false);
             loseScreen.gameObject.SetActive(false);
-            mainMenuButton.onClick.AddListener(OnMainMenuClick);
+            mainMenuButtonWinPanel.onClick.AddListener(OnMainMenuClick);
+            mainMenuButtonLosePanel.onClick.AddListener(OnMainMenuClick);
         }
 
         public void InitializeWinPanel()
@@ -30,7 +31,8 @@ namespace Game.UI
 
         private void OnMainMenuClick()
         {
-            mainMenuButton.interactable = false;
+            mainMenuButtonWinPanel.interactable = false;
+            mainMenuButtonLosePanel.interactable = false;
             StartCoroutine(ProceedToMainMenu());
         }
 

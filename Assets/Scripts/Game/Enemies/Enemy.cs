@@ -1,7 +1,8 @@
-using System;
+using Events;
 using Game.Board;
 using Lean.Pool;
 using Managers;
+using Settings;
 using TMPro;
 using UnityEngine;
 
@@ -18,6 +19,8 @@ namespace Game.Enemies
         public bool CanMove { get; set; }
         private bool IsDead => Health <= 0;
 
+        private bool triggeredBreachEvent;
+
         public void Initialize(EnemyDataModel enemyDataModel)
         {
             spriteRenderer.sprite = SpriteManager.Instance.GetEnemySprite(enemyDataModel.enemyType);
@@ -26,6 +29,7 @@ namespace Game.Enemies
             Speed = enemyDataModel.speed;
             CanMove = true;// can be changed based on events or other things
             hpText.SetText(Health.ToString());
+            triggeredBreachEvent = false;
         }
 
         public void ApplyDamage(int damage)
@@ -54,7 +58,12 @@ namespace Game.Enemies
         {
             if (CanMove)
             {
-                transform.Translate(Vector3.down * Speed * Time.deltaTime);
+                transform.Translate(Vector3.down * (Speed * Time.deltaTime));
+                if (triggeredBreachEvent == false && transform.position.y < GameSettingsManager.Instance.boardSettings.enemyBreachYPos )
+                {
+                    triggeredBreachEvent = true;
+                    EventManager.Instance.TriggerEvent<GameFinishedEvent>(new GameFinishedEvent{IsWin = false});
+                }
             }
         }
 

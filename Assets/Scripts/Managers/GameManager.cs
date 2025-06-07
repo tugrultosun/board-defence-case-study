@@ -1,4 +1,3 @@
-using System;
 using Events;
 using Game.UI;
 using Levels;
@@ -16,12 +15,15 @@ namespace Managers
         public LevelData currentLevel;
 
         private SaveManager saveManager;
+        
+        private bool isGameFinished;
 
         public override void Awake()
         {
             saveManager = new SaveManager();
             LoadLevelData();
             EventManager.Instance.AddListener<GameFinishedEvent>(OnGameFinished);
+            isGameFinished = false;
         }
 
         private async void LoadLevelData()
@@ -44,6 +46,12 @@ namespace Managers
 
         private void OnGameFinished(object e)
         {
+            if (isGameFinished)
+            {
+                Debug.LogWarning("Game is finished triggered already...Returning...");
+                return;
+            }
+            isGameFinished = true;
             Debug.LogWarning("Game finished event called");
             var gameFinishedEvent = (GameFinishedEvent)e;
             if (gameFinishedEvent.IsWin)

@@ -1,17 +1,14 @@
 using System;
-using Game.Tiles;
 using States;
-using Unity.VisualScripting;
 using UnityEngine;
 
-namespace Game
+namespace Game.Tiles
 {
     public class Tile : MonoBehaviour
     {
         public int xCoord;
 
         public int yCoord;
-        public bool ContainsDefender { get; set; }
         
         private StateManager tileStateManager;
 
