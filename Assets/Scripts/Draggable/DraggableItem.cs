@@ -1,4 +1,3 @@
-using Game;
 using Game.Board;
 using Game.Defender;
 using Game.Tiles;
@@ -12,7 +11,7 @@ namespace Draggable
     {
         [SerializeField] private Defender defender;
         
-        private Collider2D _collider;
+        private Collider2D draggableItemCollider;
 
         private Tile assignedTile;
 
@@ -20,13 +19,13 @@ namespace Draggable
         
         private void Awake()
         {
-            _collider = GetComponent<Collider2D>();
+            draggableItemCollider = GetComponent<Collider2D>();
         }
 
 
         public void OnPointerDown(PointerEventData eventData)
         {
-            _collider.enabled = false;
+            draggableItemCollider.enabled = false;
             if (assignedTile != null)
             {
                 assignedTile.ChangeState(typeof(EmptyTileState));
@@ -37,14 +36,11 @@ namespace Draggable
 
         public void OnPointerUp(PointerEventData eventData)
         {
-            _collider.enabled = true;
-            var mousePos = (Vector2)Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            var closestTile = BoardManager.Instance.GetClosestTileForDroppingDefender(mousePos);
+            draggableItemCollider.enabled = true;
+            var closestTile = GetClosestTile();
             if (closestTile != null)
             {
-                transform.position = closestTile.transform.position;
-                closestTile.ChangeState(typeof(NonEmptyTileState));
-                assignedTile = closestTile;
+                PutOnTile(closestTile);
                 defender.Activate();
             }
             else
@@ -57,8 +53,29 @@ namespace Draggable
 
         public void OnDrag(PointerEventData eventData)
         {
-            var mousePos = (Vector2)Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            transform.position = mousePos;
+            var mainCamera = Camera.main;
+            if (mainCamera != null)
+            {
+                var mousePos = (Vector2)mainCamera.ScreenToWorldPoint(Input.mousePosition);
+                transform.position = mousePos;
+            }
+        }
+        
+        private Tile GetClosestTile()
+        {
+            var mainCamera = Camera.main;
+            if (mainCamera == null) 
+                return null;
+
+            var mousePos = (Vector2)mainCamera.ScreenToWorldPoint(Input.mousePosition);
+            return BoardManager.Instance.GetClosestTileForDroppingDefender(mousePos);
+        }
+
+        private void PutOnTile(Tile tile)
+        {
+            transform.position = tile.transform.position;
+            tile.ChangeState(typeof(NonEmptyTileState));
+            assignedTile = tile;
         }
     }
 }

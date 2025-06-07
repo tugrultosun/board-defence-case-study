@@ -52,9 +52,9 @@ namespace Game.Board
         private async void OnLevelDataLoaded(object e)
         {
             EnemyController = new EnemyController();
-            await EnemyController.InitializeEnemies(GameManager.Instance.currentLevel.EnemyLevelData);
+            await EnemyController.InitializeEnemies(GameManager.Instance.LevelManager.CurrentLevel.EnemyLevelData);
             defenceController = new DefenceController();
-            await defenceController.InitializeDefenders(GameManager.Instance.currentLevel.DefenderLevelData);
+            await defenceController.InitializeDefenders(GameManager.Instance.LevelManager.CurrentLevel.DefenderLevelData);
         }
 
 
