@@ -1,3 +1,5 @@
+using Utils;
+
 namespace Settings
 {
     public class GameSettingsManager : MonoSingleton<GameSettingsManager>

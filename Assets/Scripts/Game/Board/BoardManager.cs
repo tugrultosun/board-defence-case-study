@@ -5,6 +5,7 @@ using Game.Enemies;
 using Managers;
 using Settings;
 using UnityEngine;
+using Utils;
 
 namespace Game.Board
 {

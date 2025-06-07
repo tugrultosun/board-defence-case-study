@@ -1,34 +1,37 @@
 using UnityEngine;
 
-public class MonoSingleton<T> : MonoBehaviour where T : Component 
+namespace Utils
 {
-    private static T instance;
-
-    public static T Instance
+    public class MonoSingleton<T> : MonoBehaviour where T : Component 
     {
-        get
+        private static T instance;
+
+        public static T Instance
         {
-            if (instance == null)
+            get
             {
-                instance = FindObjectOfType<T>();
                 if (instance == null)
                 {
-                    GameObject go = new GameObject(typeof(T).Name);
-                    instance = go.AddComponent<T>();
+                    instance = FindObjectOfType<T>();
+                    if (instance == null)
+                    {
+                        GameObject go = new GameObject(typeof(T).Name);
+                        instance = go.AddComponent<T>();
+                    }
                 }
+                return instance;
             }
-            return instance;
         }
-    }
 
-    public virtual void Awake()
-    {
-        if ( instance == null)
+        public virtual void Awake()
         {
-            instance = this as T;
-            if (Application.isPlaying)
+            if ( instance == null)
             {
-                DontDestroyOnLoad(gameObject);
+                instance = this as T;
+                if (Application.isPlaying)
+                {
+                    DontDestroyOnLoad(gameObject);
+                }
             }
         }
     }

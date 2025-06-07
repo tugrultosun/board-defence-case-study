@@ -1,17 +1,16 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-public class Singleton<T> where T : new()
+namespace Utils
 {
-    private static T instance = new T();
-
-
-    public static T Instance
+    public class Singleton<T> where T : new()
     {
-        get
+        private static T instance = new T();
+
+
+        public static T Instance
         {
-            return instance;
+            get
+            {
+                return instance;
+            }
         }
     }
 }
