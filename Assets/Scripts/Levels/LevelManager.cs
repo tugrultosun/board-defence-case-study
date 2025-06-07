@@ -1,3 +1,4 @@
+using System.Threading.Tasks;
 using Events;
 using Managers;
 using Save;
@@ -9,7 +10,7 @@ namespace Levels
 {
     public class LevelManager
     {
-        private SaveManager saveManager;
+        private readonly SaveManager saveManager;
 
         public LevelData CurrentLevel { get; private set; }
 
@@ -18,7 +19,7 @@ namespace Levels
             this.saveManager = saveManager;
         }
 
-        public async void LoadLevelData()
+        public async Task LoadLevelData()
         {
             int levelIndex = ((saveManager.LoadLevel().Level - 1) % 3) + 1;
             var handle = Addressables.LoadAssetAsync<LevelData>("Level" + levelIndex);

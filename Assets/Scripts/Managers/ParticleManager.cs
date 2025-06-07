@@ -12,7 +12,7 @@ namespace Managers
 
         public ParticleSystem GetExplodeParticles()
         {
-            return LeanPool.Spawn<ParticleSystem>(explodeParticles, transform.position, Quaternion.identity);
+            return LeanPool.Spawn(explodeParticles, transform.position, Quaternion.identity);
         }
 
         public ParticleSystem GetHitParticles()

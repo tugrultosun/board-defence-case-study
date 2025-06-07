@@ -3,8 +3,6 @@ using Game.UI;
 using Levels;
 using Save;
 using UnityEngine;
-using UnityEngine.AddressableAssets;
-using UnityEngine.ResourceManagement.AsyncOperations;
 
 namespace Managers
 {
@@ -22,7 +20,7 @@ namespace Managers
         {
             saveManager = new SaveManager();
             LevelManager = new LevelManager(saveManager);
-            LevelManager.LoadLevelData();
+            _ = LevelManager.LoadLevelData();
             EventManager.Instance.AddListener<GameFinishedEvent>(OnGameFinished);
             isGameFinished = false;
         }
