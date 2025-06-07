@@ -41,10 +41,9 @@ namespace Game.Board
         {
             EnemyController = new EnemyController(GameSettingsManager.Instance.enemySettings);
             await EnemyController.InitializeEnemies(GameManager.Instance.LevelManager.CurrentLevel.EnemyLevelData);
-            defenceController = new DefenceController();
+            defenceController = new DefenceController(GameSettingsManager.Instance.defenderSettings);
             await defenceController.InitializeDefenders(GameManager.Instance.LevelManager.CurrentLevel.DefenderLevelData);
         }
-
 
         public Tile GetClosestTileForDroppingDefender(Vector2 mousePos)
         {

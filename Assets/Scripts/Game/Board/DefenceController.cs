@@ -12,6 +12,13 @@ namespace Game.Board
 {
     public class DefenceController
     {
+        private readonly DefenderSettings defenderSettings;
+
+        public DefenceController(DefenderSettings settings)
+        {
+            defenderSettings = settings;
+        }
+        
         public async Task InitializeDefenders(List<DefenderLevelData> currentLevelEnemyDefenderLevelData)
         {
             var handle = Addressables.LoadAssetAsync<GameObject>("defender");
@@ -23,7 +30,7 @@ namespace Game.Board
                     for (var i = 0; i < defenderLevelData.count; i++)
                     {
                         var defender = LeanPool.Spawn(defenderPrefab.GetComponent<Defender.Defender>());
-                        defender.Initialize(GameSettingsManager.Instance.GetDefender(defenderLevelData.defenderType));
+                        defender.Initialize(defenderSettings.GetDefender(defenderLevelData.defenderType));
                         defender.transform.position = new Vector3((int)defenderLevelData.defenderType, -1, 0);
                         defender.GetComponent<DraggableItem>().initialPos = defender.transform.position;
                     }
