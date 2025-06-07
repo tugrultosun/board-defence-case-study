@@ -11,19 +11,21 @@ namespace Game.Board
     public class BoardManager : MonoSingleton<BoardManager>
     {
         [SerializeField] private Camera boardCamera;
+        
         public Tile tilePrefab;
 
         private CameraController cameraController;
 
         private DefenceController defenceController;
-        
         public EnemyController EnemyController { get; private set; }
+        private TileController TileController { get; set; }
 
         private Tile[,] tiles;
 
         public override void Awake()
         {
-            InitializeTiles();
+            TileController = new TileController(tilePrefab);
+            TileController.GenerateTiles(GameSettingsManager.Instance.boardSettings.width, GameSettingsManager.Instance.boardSettings.height);
             cameraController = new CameraController();
             cameraController.Initialize(boardCamera);
             EventManager.Instance.AddListener<LevelDataLoadedEvent>(OnLevelDataLoaded);
@@ -34,24 +36,10 @@ namespace Game.Board
         {
             EventManager.Instance.RemoveListener<LevelDataLoadedEvent>(OnLevelDataLoaded);
         }
-
-        private void InitializeTiles()
-        {
-            tiles = new Tile[GameSettingsManager.Instance.boardSettings.width,
-                GameSettingsManager.Instance.boardSettings.height];
-            for (var i = 0; i < GameSettingsManager.Instance.boardSettings.width; i++)
-            for (var j = 0; j < GameSettingsManager.Instance.boardSettings.height; j++)
-            {
-                var tile = Instantiate(tilePrefab, transform);
-                tile.transform.position = new Vector3(i, j);
-                tiles[i, j] = tile;
-                tile.Init(i, j);
-            }
-        }
-
+        
         private async void OnLevelDataLoaded(object e)
         {
-            EnemyController = new EnemyController();
+            EnemyController = new EnemyController(GameSettingsManager.Instance.enemySettings);
             await EnemyController.InitializeEnemies(GameManager.Instance.LevelManager.CurrentLevel.EnemyLevelData);
             defenceController = new DefenceController();
             await defenceController.InitializeDefenders(GameManager.Instance.LevelManager.CurrentLevel.DefenderLevelData);
@@ -60,20 +48,12 @@ namespace Game.Board
 
         public Tile GetClosestTileForDroppingDefender(Vector2 mousePos)
         {
-            for (var i = 0; i < GameSettingsManager.Instance.boardSettings.width; i++)
-            for (var j = 0; j < GameSettingsManager.Instance.boardSettings.height; j++)
-                if (Vector2.Distance(mousePos, tiles[i, j].transform.position) < GameSettingsManager.Instance.boardSettings.defenderPlacementThreshold &&
-                    j <= GameSettingsManager.Instance.boardSettings.defenceItemMaxPlacebleYIndex && tiles[i, j].GetTileState() == typeof(EmptyTileState))
-                    return tiles[i, j];
-
-            return null;
+            return TileController.GetClosestTileForDroppingDefender(mousePos);
         }
 
         public Vector3 GetRandomUpmostTileSpawnPosition()
         {
-            var randomColumn = Random.Range(0, GameSettingsManager.Instance.boardSettings.width);
-            var tilePos = tiles[randomColumn, GameSettingsManager.Instance.boardSettings.height - 1].transform.position;
-            return tilePos + GameSettingsManager.Instance.boardSettings.boardSpawnOffset;
+            return TileController.GetRandomUpmostTileSpawnPosition();
         }
 
         public void RemoveEnemy(Enemy enemy)

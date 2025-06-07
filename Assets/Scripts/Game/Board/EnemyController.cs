@@ -10,9 +10,15 @@ namespace Game.Board
 {
     public class EnemyController
     {
-        public List<Enemy> Enemies => enemies;
+        private readonly EnemySettings enemySettings;
+        public List<Enemy> Enemies { get; private set; }
         
-        private List<Enemy> enemies = new List<Enemy>();
+        public EnemyController(EnemySettings settings)
+        {
+            enemySettings = settings;
+            Enemies = new List<Enemy>();
+        }
+        
         public async Task InitializeEnemies(List<EnemyLevelData> currentLevelEnemyLevelData)
         {
             var handle = Addressables.LoadAssetAsync<GameObject>("enemy");
@@ -24,11 +30,11 @@ namespace Game.Board
                 {
                     for (int i = 0; i < enemyLevelData.count; i++)
                     {
-                        var enemy = LeanPool.Spawn<Enemy>(enemyPrefab.GetComponent<Enemy>());
-                        enemy.Initialize(GameSettingsManager.Instance.GetEnemy(enemyLevelData.enemyType));
+                        var enemy = LeanPool.Spawn(enemyPrefab.GetComponent<Enemy>());
+                        enemy.Initialize(enemySettings.GetEnemy(enemyLevelData.enemyType));
                         var randomSpawnPosition = BoardManager.Instance.GetRandomUpmostTileSpawnPosition();
                         enemy.transform.position = randomSpawnPosition;
-                        enemies.Add(enemy);
+                        Enemies.Add(enemy);
                     }
                 }
                 Addressables.Release(handle);
@@ -41,8 +47,8 @@ namespace Game.Board
 
         public bool Remove(Enemy enemy)
         {
-            enemies.Remove(enemy);
-            if (enemies.Count <= 0)
+            Enemies.Remove(enemy);
+            if (Enemies.Count <= 0)
             {
                 return true;
             }
