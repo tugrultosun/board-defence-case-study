@@ -12,20 +12,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d7c80d6b66b7dbb4eabc2a0af1a30b2d, type: 3}
   m_Name: Defender Settings
   m_EditorClassIdentifier: 
-  defenderData1:
-    defenderType: 0
+  defenderDataModels:
+  - defenderType: 0
     damage: 3
     range: 4
     attackRate: 3
     direction: 0
-  defenderData2:
-    defenderType: 1
+  - defenderType: 1
     damage: 5
     range: 2
     attackRate: 4
     direction: 0
-  defenderData3:
-    defenderType: 2
+  - defenderType: 2
     damage: 10
     range: 1
     attackRate: 5
