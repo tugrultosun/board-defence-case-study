@@ -22,6 +22,8 @@ namespace Game.Defender
         
         public IAttackStrategy Strategy { get; set; }
 
+        private WaitForSeconds cachedCooldown;
+
         public void Initialize(DefenderDataModel defenderDataModel)
         {
             spriteRenderer.sprite = SpriteManager.Instance.GetDefenderSprite(defenderDataModel.defenderType);
@@ -31,6 +33,7 @@ namespace Game.Defender
             AttackRate = defenderDataModel.attackRate;
             AttackDirection = defenderDataModel.direction;
             Strategy = GetStrategy(AttackDirection);
+            cachedCooldown = new WaitForSeconds(AttackRate);
         }
 
         private IAttackStrategy GetStrategy(DefenderAttackDirection defenderAttackDirection)
@@ -61,10 +64,9 @@ namespace Game.Defender
         {
             if (CanAttack)
             {
-                for(int i = 0 ; i < BoardManager.Instance.EnemyController.Enemies.Count ; i++)
+                foreach (var enemy in BoardManager.Instance.EnemyController.Enemies)
                 {
-                    Enemy enemy = BoardManager.Instance.EnemyController.Enemies[i];
-                    if(Strategy.ShouldAttack(transform,enemy.transform))
+                    if(Strategy.ShouldAttack(transform, enemy.transform))
                     {
                         Debug.Log($"defender :{DefenderType} is attacking direction{AttackDirection} with dmg {Damage}");
                         Shoot(enemy);
@@ -76,7 +78,7 @@ namespace Game.Defender
 
         private void Shoot(Enemy enemy)
         {
-            var projectile = LeanPool.Spawn<Projectile>(projectilePrefab);
+            var projectile = LeanPool.Spawn(projectilePrefab);
             projectile.Initialize(DefenderType, Damage, enemy);
             projectile.transform.position = transform.position;
             StartCoroutine(ApplyCooldown());
@@ -85,7 +87,7 @@ namespace Game.Defender
         private IEnumerator ApplyCooldown()
         {
             CanAttack = false;
-            yield return new WaitForSeconds(AttackRate);
+            yield return cachedCooldown;
             CanAttack = true;
         }
     }
