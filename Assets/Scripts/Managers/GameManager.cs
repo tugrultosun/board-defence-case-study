@@ -19,7 +19,6 @@ namespace Managers
 
         public override void Awake()
         {
-            base.Awake();
             saveManager = new SaveManager();
             LoadLevelData();
             EventManager.Instance.AddListener<GameFinishedEvent>(OnGameFinished);

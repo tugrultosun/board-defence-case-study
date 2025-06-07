@@ -16,6 +16,7 @@ namespace Game.Enemies
         public int Health { get; set; }
         public float Speed { get; set; }
         public bool CanMove { get; set; }
+        private bool IsDead => Health <= 0;
 
         public void Initialize(EnemyDataModel enemyDataModel)
         {
@@ -29,12 +30,18 @@ namespace Game.Enemies
 
         public void ApplyDamage(int damage)
         {
+            if (IsDead)
+            {
+                //since two defence item can attack same enemy
+                Debug.Log("enemy is already dead");
+                return;
+            }
             Health -= damage;
             hpText.SetText(Health.ToString());
             Debug.Log("defender attacked, enemy hp is now:" + Health);
             var hitParticleSystem = ParticleManager.Instance.GetHitParticles();
             hitParticleSystem.transform.position = transform.position;
-            if (Health <= 0)
+            if (IsDead)
             {
                 BoardManager.Instance.RemoveEnemy(this);
                 var explodeParticleSystem = ParticleManager.Instance.GetExplodeParticles();
