@@ -79,8 +79,7 @@ namespace Game.Defender
         private void Shoot(Enemy enemy)
         {
             var projectile = LeanPool.Spawn(projectilePrefab);
-            projectile.Initialize(DefenderType, Damage, enemy);
-            projectile.transform.position = transform.position;
+            projectile.Initialize(transform,DefenderType, Damage, enemy);
             StartCoroutine(ApplyCooldown());
         }
 

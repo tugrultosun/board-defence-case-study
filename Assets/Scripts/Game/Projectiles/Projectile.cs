@@ -15,8 +15,9 @@ namespace Game.Projectiles
         private Enemy target;
         
         private int damage;
-        public void Initialize(DefenderType defenderType,int damageDeal,Enemy enemy)
+        public void Initialize(Transform spawnPos,DefenderType defenderType,int damageDeal,Enemy enemy)
         {
+            transform.position = spawnPos.position;
             spriteRenderer.sprite = SpriteManager.Instance.GetProjectileSprite(defenderType);
             damage = damageDeal;
             target = enemy;
