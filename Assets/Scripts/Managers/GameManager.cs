@@ -1,3 +1,4 @@
+using System;
 using Events;
 using Game.UI;
 using Levels;
@@ -21,9 +22,13 @@ namespace Managers
         {
             saveManager = new SaveManager();
             LevelManager = new LevelManager(saveManager);
-            _ = LevelManager.LoadLevelData();
             EventManager.Instance.AddListener<GameFinishedEvent>(OnGameFinished);
             isGameFinished = false;
+        }
+
+        private void Start()
+        {
+            _ = LevelManager.LoadLevelData();
         }
 
         private void OnGameFinished(object e)

@@ -13,13 +13,9 @@ namespace Game.Defender
 
         public bool ShouldAttack(Transform defender, Transform enemy)
         {
-            var distanceToEnemy = Vector2.Distance(defender.position, enemy.transform.position);
-            var isInRange = distanceToEnemy <= Range;
-            if (isInRange)
-            {
-                return true;
-            }
-            return false;
+            float sqrDistance = (defender.position - enemy.transform.position).sqrMagnitude;
+            var isInRange = sqrDistance <= Range * Range;
+            return isInRange;
         }
     }
 }

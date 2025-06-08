@@ -1,3 +1,4 @@
+using Game.Helpers;
 using Settings;
 using UnityEngine;
 
@@ -5,26 +6,22 @@ namespace Game.Defender
 {
     public class ForwardAttackStrategy : IAttackStrategy
     {
-
         public int Range { get; set; }
+
+        private readonly float thresholdForCheckingIfItsInForwardDirection;
         
         public ForwardAttackStrategy(int range)
         {
             Range = range;
+            thresholdForCheckingIfItsInForwardDirection = GameSettingsManager.Instance.boardSettings.defenderAttackThreshold;
         }
-
         
-
         public bool ShouldAttack(Transform defender, Transform enemy)
         {
-            var distanceToEnemy = Vector2.Distance(defender.position, enemy.transform.position);
-            var isInRange = distanceToEnemy <= Range;
-            var isInForwardDirection =  Mathf.Abs(defender.position.x - enemy.position.x) < GameSettingsManager.Instance.boardSettings.defenderAttackThreshold;
-            if (isInRange && isInForwardDirection)
-            {
-                return true;
-            }
-            return false;
+            var sqrDistanceToEnemy = (defender.position - enemy.transform.position).sqrMagnitude;
+            var isInRange = sqrDistanceToEnemy <= Range * Range;
+            var isInForwardDirection = DirectionHelper.IsInForwardDirection(defender.position,enemy.position,thresholdForCheckingIfItsInForwardDirection);
+            return isInRange && isInForwardDirection;
         }
     }
 }
