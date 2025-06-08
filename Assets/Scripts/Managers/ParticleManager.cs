@@ -11,14 +11,14 @@ namespace Managers
         public ParticleSystem hitParticles;
 
 
-        public ParticleSystem GetExplodeParticles()
+        public ParticleSystem GetExplodeParticles(Transform spawnPoint)
         {
-            return LeanPool.Spawn(explodeParticles, transform.position, Quaternion.identity);
+            return LeanPool.Spawn(explodeParticles, spawnPoint.position, Quaternion.identity);
         }
 
-        public ParticleSystem GetHitParticles()
+        public ParticleSystem GetHitParticles(Transform spawnPoint)
         {
-            return LeanPool.Spawn(hitParticles, transform.position, Quaternion.identity);
+            return LeanPool.Spawn(hitParticles, spawnPoint.position, Quaternion.identity);
         }
     }
 }

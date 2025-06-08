@@ -47,13 +47,11 @@ namespace Game.Enemies
             Health -= damage;
             hpText.SetText(Health.ToString());
             Debug.Log("defender attacked, enemy hp is now:" + Health);
-            var hitParticleSystem = ParticleManager.Instance.GetHitParticles();
-            hitParticleSystem.transform.position = transform.position;
+            ParticleManager.Instance.GetHitParticles(transform);
             if (IsDead)
             {
-                BoardManager.Instance.RemoveEnemy(this);
-                var explodeParticleSystem = ParticleManager.Instance.GetExplodeParticles();
-                explodeParticleSystem.transform.position = transform.position;
+                BoardManager.Instance.RemoveDeadEnemy(this);
+                ParticleManager.Instance.GetExplodeParticles(transform);
                 LeanPool.Despawn(gameObject);
             }
         }

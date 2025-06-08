@@ -56,7 +56,7 @@ namespace Game.Board
             return TileController.GetRandomUpmostTileSpawnPosition();
         }
 
-        public void RemoveEnemy(Enemy enemy)
+        public void RemoveDeadEnemy(Enemy enemy)
         {
             bool enemyDoesntLeft = EnemyController.Remove(enemy);
             if(enemyDoesntLeft)
