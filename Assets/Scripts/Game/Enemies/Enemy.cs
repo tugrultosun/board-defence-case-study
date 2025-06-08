@@ -1,5 +1,6 @@
 using Events;
 using Game.Board;
+using Game.Movement;
 using Lean.Pool;
 using Managers;
 using Settings;
@@ -20,6 +21,8 @@ namespace Game.Enemies
         private bool IsDead => Health <= 0;
 
         private bool triggeredBreachEvent;
+        
+        private IMovementAbility movementAbility;
 
         public void Initialize(EnemyDataModel enemyDataModel)
         {
@@ -30,6 +33,7 @@ namespace Game.Enemies
             CanMove = true;// can be changed based on events or other things
             hpText.SetText(Health.ToString());
             triggeredBreachEvent = false;
+            movementAbility = new DownMovement(Speed);
         }
 
         public void ApplyDamage(int damage)
@@ -53,23 +57,28 @@ namespace Game.Enemies
                 LeanPool.Despawn(gameObject);
             }
         }
-
+        
+        private void Update()
+        {
+            Move();
+            CheckIfCrossedBottomOfBoard();
+        }
+        
         public void Move()
         {
             if (CanMove)
             {
-                transform.Translate(Vector3.down * (Speed * Time.deltaTime));
-                if (triggeredBreachEvent == false && transform.position.y < GameSettingsManager.Instance.boardSettings.enemyBreachYPos )
-                {
-                    triggeredBreachEvent = true;
-                    EventManager.Instance.TriggerEvent<GameFinishedEvent>(new GameFinishedEvent{IsWin = false});
-                }
+                movementAbility.Movement(transform);
             }
         }
-
-        private void Update()
+        
+        private void CheckIfCrossedBottomOfBoard()
         {
-            Move();
+            if (triggeredBreachEvent == false && transform.position.y < GameSettingsManager.Instance.boardSettings.enemyBreachYPos )
+            {
+                triggeredBreachEvent = true;
+                EventManager.Instance.TriggerEvent<GameFinishedEvent>(new GameFinishedEvent{IsWin = false});
+            }
         }
     }
 }
