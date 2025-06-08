@@ -25,7 +25,7 @@ namespace Game.Board
 
         public override void Awake()
         {
-            TileController = new TileController(tilePrefab);
+            TileController = new TileController(tilePrefab, transform);
             TileController.GenerateTiles(GameSettingsManager.Instance.boardSettings.width, GameSettingsManager.Instance.boardSettings.height);
             cameraController = new CameraController();
             cameraController.Initialize(boardCamera);

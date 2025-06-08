@@ -7,10 +7,12 @@ namespace Game.Tiles
     {
         private Tile[,] tiles;
         private readonly Tile tilePrefab;
+        private readonly Transform parent;
 
-        public TileController(Tile tilePrefab)
+        public TileController(Tile tilePrefab,Transform board)
         {
             this.tilePrefab = tilePrefab;
+            parent = board;
         }
 
         public void GenerateTiles(int width, int height)
@@ -21,6 +23,7 @@ namespace Game.Tiles
                 for (int y = 0; y < height; y++)
                 {
                     var tileGO = Object.Instantiate(tilePrefab, new Vector3(x, y, 0), Quaternion.identity);
+                    tileGO.transform.SetParent(parent);
                     var tile = tileGO.GetComponent<Tile>();
                     tile.Init(x, y);
                     tiles[x, y] = tile;
