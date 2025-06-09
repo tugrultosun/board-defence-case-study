@@ -1,11 +1,11 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using AssetLoader;
 using Game.Enemies;
 using Lean.Pool;
 using Settings;
 using UnityEngine;
-using UnityEngine.AddressableAssets;
-using UnityEngine.ResourceManagement.AsyncOperations;
+using Zenject;
 
 namespace Game.Board
 {
@@ -14,19 +14,21 @@ namespace Game.Board
         private readonly EnemySettings enemySettings;
         public List<Enemy> Enemies { get; private set; }
         
-        public EnemyController(EnemySettings settings)
+        private readonly IAssetLoader assetLoader;
+        
+        [Inject]
+        public EnemyController(EnemySettings settings, IAssetLoader loader)
         {
             enemySettings = settings;
             Enemies = new List<Enemy>();
+            assetLoader = loader;
         }
         
         public async Task InitializeEnemies(List<EnemyLevelData> currentLevelEnemyLevelData)
         {
-            var handle = Addressables.LoadAssetAsync<GameObject>("enemy");
-            await handle.Task;
-            if (handle.Status == AsyncOperationStatus.Succeeded)
+            var enemyPrefab = await assetLoader.LoadAssetAsync<GameObject>("enemy");
+            if (enemyPrefab != null)
             {
-                var enemyPrefab  = handle.Result;
                 foreach (var enemyLevelData in currentLevelEnemyLevelData)
                 {
                     for (int i = 0; i < enemyLevelData.count; i++)
@@ -38,23 +40,18 @@ namespace Game.Board
                         enemy.gameObject.SetActive(false);
                     }
                 }
-                Addressables.Release(handle);
+                assetLoader.ReleaseAsset(enemyPrefab);
             }
             else
             {
-                Debug.LogError($"Failed to load enemy");
+                Debug.LogError("Failed to load enemy prefab");
             }
         }
 
         public bool Remove(Enemy enemy)
         {
             Enemies.Remove(enemy);
-            if (Enemies.Count <= 0)
-            {
-                return true;
-            }
-
-            return false;
+            return Enemies.Count <= 0;
         }
     }
 }

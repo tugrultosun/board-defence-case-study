@@ -1,3 +1,4 @@
+using AssetLoader;
 using Events;
 using Game.Controllers;
 using Game.Tiles;
@@ -6,6 +7,7 @@ using Managers;
 using Settings;
 using UnityEngine;
 using Utils;
+using Zenject;
 
 namespace Game.Board
 {
@@ -19,11 +21,13 @@ namespace Game.Board
 
         private CameraController cameraController;
 
-        private DefenceController defenceController;
-        public EnemyController EnemyController { get; private set; }
+        [Inject] private DefenceController defenceController;
+        [Inject] public EnemyController EnemyController { get; private set; }
         private TileController TileController { get; set; }
 
         private Tile[,] tiles;
+
+        [Inject] private IAssetLoader assetLoader;
 
         public override void Awake()
         {
@@ -42,10 +46,8 @@ namespace Game.Board
         
         private async void OnLevelDataLoaded(object e)
         {
-            EnemyController = new EnemyController(GameSettingsManager.Instance.enemySettings);
             await EnemyController.InitializeEnemies(GameManager.Instance.LevelManager.CurrentLevel.EnemyLevelData);
             waveController.Initialize(EnemyController);
-            defenceController = new DefenceController(GameSettingsManager.Instance.defenderSettings);
             await defenceController.InitializeDefenders(GameManager.Instance.LevelManager.CurrentLevel.DefenderLevelData);
         }
 
