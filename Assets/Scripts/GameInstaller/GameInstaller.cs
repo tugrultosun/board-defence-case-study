@@ -1,7 +1,6 @@
 using AssetLoader;
 using Game.Board;
 using Settings;
-using UnityEngine;
 using Zenject;
 
 namespace GameInstaller
@@ -10,11 +9,11 @@ namespace GameInstaller
     {
         public override void InstallBindings()
         {
+            var settingsManager = GameSettingsManager.Instance;
             Container.Bind<IAssetLoader>().To<AddressableAssetLoader>().AsSingle();
-            Container.Bind<DefenceController>().AsSingle();
-            Container.Bind<EnemyController>().AsSingle();
-            Container.Bind<EnemySettings>().FromInstance(GameSettingsManager.Instance.enemySettings);
-            Container.Bind<DefenderSettings>().FromInstance(GameSettingsManager.Instance.defenderSettings);
+            Container.Bind<EnemySettings>().FromInstance(settingsManager.enemySettings);
+            Container.Bind<DefenderSettings>().FromInstance(settingsManager.defenderSettings);
+            Container.Bind<BoardSettings>().FromInstance(settingsManager.boardSettings).AsSingle();
         }
     }
 }

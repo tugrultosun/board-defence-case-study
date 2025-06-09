@@ -23,7 +23,7 @@ namespace Game.Board
 
         [Inject] private DefenceController defenceController;
         [Inject] public EnemyController EnemyController { get; private set; }
-        private TileController TileController { get; set; }
+        [Inject] private TileController TileController { get; set; }
 
         private Tile[,] tiles;
 
@@ -31,8 +31,6 @@ namespace Game.Board
 
         public override void Awake()
         {
-            TileController = new TileController(tilePrefab, transform);
-            TileController.GenerateTiles(GameSettingsManager.Instance.boardSettings.width, GameSettingsManager.Instance.boardSettings.height);
             cameraController = new CameraController();
             cameraController.Initialize(boardCamera);
             EventManager.Instance.AddListener<LevelDataLoadedEvent>(OnLevelDataLoaded);

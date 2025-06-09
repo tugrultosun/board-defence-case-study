@@ -831,6 +831,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   boardManager: {fileID: 405728999}
+  boardRoot: {fileID: 405728998}
+  tilePrefab: {fileID: -1775193338564638742, guid: 220accc56d24dda40b20cadc0d629181, type: 3}
 --- !u!1 &959909639
 GameObject:
   m_ObjectHideFlags: 0

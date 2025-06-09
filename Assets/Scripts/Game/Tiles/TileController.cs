@@ -1,5 +1,6 @@
 using Settings;
 using UnityEngine;
+using Zenject;
 
 namespace Game.Tiles
 {
@@ -8,19 +9,23 @@ namespace Game.Tiles
         private Tile[,] tiles;
         private readonly Tile tilePrefab;
         private readonly Transform parent;
+        private readonly BoardSettings boardSettings;
 
-        public TileController(Tile tilePrefab,Transform board)
+        [Inject]
+        public TileController(Tile tilePrefab,Transform board,BoardSettings settings)
         {
             this.tilePrefab = tilePrefab;
             parent = board;
+            boardSettings = settings;
+            GenerateTiles();
         }
 
-        public void GenerateTiles(int width, int height)
+        private void GenerateTiles()
         {
-            tiles = new Tile[width, height];
-            for (int x = 0; x < width; x++)
+            tiles = new Tile[boardSettings.width, boardSettings.height];
+            for (int x = 0; x < boardSettings.width; x++)
             {
-                for (int y = 0; y < height; y++)
+                for (int y = 0; y < boardSettings.height; y++)
                 {
                     var tileGO = Object.Instantiate(tilePrefab, new Vector3(x, y, 0), Quaternion.identity);
                     tileGO.transform.SetParent(parent);
@@ -33,10 +38,10 @@ namespace Game.Tiles
         
         public Tile GetClosestTileForDroppingDefender(Vector2 mousePos)
         {
-            for (var i = 0; i < GameSettingsManager.Instance.boardSettings.width; i++)
-            for (var j = 0; j < GameSettingsManager.Instance.boardSettings.height; j++)
-                if (Vector2.Distance(mousePos, tiles[i, j].transform.position) < GameSettingsManager.Instance.boardSettings.defenderPlacementThreshold &&
-                    j <= GameSettingsManager.Instance.boardSettings.defenceItemMaxPlacebleYIndex && tiles[i, j].GetTileState() == typeof(EmptyTileState))
+            for (var i = 0; i < boardSettings.width; i++)
+            for (var j = 0; j < boardSettings.height; j++)
+                if (Vector2.Distance(mousePos, tiles[i, j].transform.position) < boardSettings.defenderPlacementThreshold &&
+                    j <= boardSettings.defenceItemMaxPlacebleYIndex && tiles[i, j].GetTileState() == typeof(EmptyTileState))
                     return tiles[i, j];
 
             return null;
@@ -44,9 +49,9 @@ namespace Game.Tiles
         
         public Vector3 GetRandomUpmostTileSpawnPosition()
         {
-            var randomColumn = Random.Range(0, GameSettingsManager.Instance.boardSettings.width);
-            var tilePos = tiles[randomColumn, GameSettingsManager.Instance.boardSettings.height - 1].transform.position;
-            return tilePos + GameSettingsManager.Instance.boardSettings.boardSpawnOffset;
+            var randomColumn = Random.Range(0, boardSettings.width);
+            var tilePos = tiles[randomColumn, boardSettings.height - 1].transform.position;
+            return tilePos + boardSettings.boardSpawnOffset;
         }
     }
 }
