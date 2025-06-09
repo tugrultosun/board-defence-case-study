@@ -12,5 +12,6 @@ namespace Settings
         public float defenderAttackThreshold;
         public Vector3 boardSpawnOffset;
         public int enemyBreachYPos;
+        public float boardEnemySpawnDelay;
     }
 }

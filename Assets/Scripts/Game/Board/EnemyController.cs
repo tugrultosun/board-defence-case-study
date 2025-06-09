@@ -5,6 +5,7 @@ using Lean.Pool;
 using Settings;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
+using UnityEngine.ResourceManagement.AsyncOperations;
 
 namespace Game.Board
 {
@@ -23,7 +24,7 @@ namespace Game.Board
         {
             var handle = Addressables.LoadAssetAsync<GameObject>("enemy");
             await handle.Task;
-            if (handle.Status == UnityEngine.ResourceManagement.AsyncOperations.AsyncOperationStatus.Succeeded)
+            if (handle.Status == AsyncOperationStatus.Succeeded)
             {
                 var enemyPrefab  = handle.Result;
                 foreach (var enemyLevelData in currentLevelEnemyLevelData)
@@ -32,9 +33,9 @@ namespace Game.Board
                     {
                         var enemy = LeanPool.Spawn(enemyPrefab.GetComponent<Enemy>());
                         enemy.Initialize(enemySettings.GetEnemy(enemyLevelData.enemyType));
-                        var randomSpawnPosition = BoardManager.Instance.GetRandomUpmostTileSpawnPosition();
-                        enemy.transform.position = randomSpawnPosition;
+                        enemy.transform.position = BoardManager.Instance.GetRandomUpmostTileSpawnPosition();
                         Enemies.Add(enemy);
+                        enemy.gameObject.SetActive(false);
                     }
                 }
                 Addressables.Release(handle);

@@ -13,6 +13,8 @@ namespace Game.Board
     {
         [SerializeField] private Camera boardCamera;
         
+        [SerializeField] private WaveController waveController;
+        
         public Tile tilePrefab;
 
         private CameraController cameraController;
@@ -42,6 +44,7 @@ namespace Game.Board
         {
             EnemyController = new EnemyController(GameSettingsManager.Instance.enemySettings);
             await EnemyController.InitializeEnemies(GameManager.Instance.LevelManager.CurrentLevel.EnemyLevelData);
+            waveController.Initialize(EnemyController);
             defenceController = new DefenceController(GameSettingsManager.Instance.defenderSettings);
             await defenceController.InitializeDefenders(GameManager.Instance.LevelManager.CurrentLevel.DefenderLevelData);
         }

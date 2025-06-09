@@ -18,7 +18,7 @@ namespace Game.Enemies
         public int Health { get; set; }
         public float Speed { get; set; }
         public bool CanMove { get; set; }
-        private bool IsDead => Health <= 0;
+        public bool IsDead => Health <= 0;
 
         private bool triggeredBreachEvent;
         
