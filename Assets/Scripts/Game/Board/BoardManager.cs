@@ -1,10 +1,8 @@
-using AssetLoader;
 using Events;
 using Game.Controllers;
 using Game.Tiles;
 using Game.Enemies;
 using Managers;
-using Settings;
 using UnityEngine;
 using Utils;
 using Zenject;

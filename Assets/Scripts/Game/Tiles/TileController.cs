@@ -27,9 +27,9 @@ namespace Game.Tiles
             {
                 for (int y = 0; y < boardSettings.height; y++)
                 {
-                    var tileGO = Object.Instantiate(tilePrefab, new Vector3(x, y, 0), Quaternion.identity);
-                    tileGO.transform.SetParent(parent);
-                    var tile = tileGO.GetComponent<Tile>();
+                    var tileGo = Object.Instantiate(tilePrefab, new Vector3(x, y, 0), Quaternion.identity);
+                    tileGo.transform.SetParent(parent);
+                    var tile = tileGo.GetComponent<Tile>();
                     tile.Init(x, y);
                     tiles[x, y] = tile;
                 }
