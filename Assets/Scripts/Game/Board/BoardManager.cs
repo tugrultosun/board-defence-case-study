@@ -13,13 +13,9 @@ namespace Game.Board
 {
     public class BoardManager : MonoSingleton<BoardManager>
     {
-        [SerializeField] private Camera boardCamera;
-        
         [SerializeField] private WaveController waveController;
         
-        public Tile tilePrefab;
-
-        private CameraController cameraController;
+        [Inject] private CameraController cameraController;
 
         [Inject] private DefenceController defenceController; 
         [Inject] public EnemyController EnemyController { get; }
@@ -27,8 +23,6 @@ namespace Game.Board
 
         public override void Awake()
         {
-            cameraController = new CameraController();
-            cameraController.Initialize(boardCamera);
             EventManager.Instance.AddListener<LevelDataLoadedEvent>(OnLevelDataLoaded);
         }
 

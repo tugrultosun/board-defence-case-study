@@ -1,17 +1,26 @@
 using Settings;
 using UnityEngine;
+using Zenject;
 
 namespace Game.Controllers
 {
     public class CameraController
     {
-        private Camera mainCamera;
+        private readonly Camera mainCamera;
+        private readonly BoardSettings boardSettings;
 
-        public void Initialize(Camera boardCamera)
+        [Inject]
+        public CameraController(Camera main, BoardSettings settings)
         {
-            this.mainCamera = boardCamera;
-            var x = GameSettingsManager.Instance.boardSettings.width;
-            var y = GameSettingsManager.Instance.boardSettings.height;
+            mainCamera = main;
+            boardSettings = settings;
+            Initialize();
+        }
+
+        private void Initialize()
+        {
+            var x = boardSettings.width;
+            var y = boardSettings.height;
             var pos = new Vector3(x / 2.0f - 0.5f, y / 2.0f - 0.5f, -10.0f);
             var aspectRatio = (float)Screen.width / Screen.height;
             var height = (float)y;
