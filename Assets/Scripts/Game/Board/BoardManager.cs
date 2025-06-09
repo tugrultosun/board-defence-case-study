@@ -21,13 +21,9 @@ namespace Game.Board
 
         private CameraController cameraController;
 
-        [Inject] private DefenceController defenceController;
-        [Inject] public EnemyController EnemyController { get; private set; }
-        [Inject] private TileController TileController { get; set; }
-
-        private Tile[,] tiles;
-
-        [Inject] private IAssetLoader assetLoader;
+        [Inject] private DefenceController defenceController; 
+        [Inject] public EnemyController EnemyController { get; }
+        [Inject] private TileController TileController { get; }
 
         public override void Awake()
         {
