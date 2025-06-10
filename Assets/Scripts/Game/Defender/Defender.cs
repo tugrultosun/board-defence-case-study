@@ -13,12 +13,12 @@ namespace Game.Defender
         [SerializeField] private SpriteRenderer spriteRenderer;
         
         [SerializeField] private Projectile projectilePrefab;
-        public DefenderType DefenderType { get; set; }
-        public int Damage { get; set; }
-        public int Range { get; set; }
-        public int AttackRate { get; set; }
-        public bool CanAttack { get; set; }
-        public DefenderAttackDirection AttackDirection { get; set; }
+        public DefenderType DefenderType { get; private set; }
+        public int Damage { get; private set; }
+        public int Range { get; private set; }
+        public int AttackRate { get; private set; }
+        public bool CanAttack { get; private set; }
+        public DefenderAttackDirection AttackDirection { get; private set; }
         
         public IAttackStrategy Strategy { get; set; }
 

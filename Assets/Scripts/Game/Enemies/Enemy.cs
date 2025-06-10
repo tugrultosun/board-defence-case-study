@@ -14,15 +14,14 @@ namespace Game.Enemies
         [SerializeField] private SpriteRenderer spriteRenderer;
         
         [SerializeField] private TextMeshPro hpText;
-        public EnemyType EnemyType { get; set; }
-        public int Health { get; set; }
-        public float Speed { get; set; }
-        public bool CanMove { get; set; }
+        public EnemyType EnemyType { get; private set; }
+        public int Health { get; private set; }
+        public float Speed { get; private set; }
+        public bool CanMove { get; private set; }
+        public IMovementAbility MovementAbility { get; private set; }
         public bool IsDead => Health <= 0;
 
         private bool triggeredBreachEvent;
-        
-        private IMovementAbility movementAbility;
 
         public void Initialize(EnemyDataModel enemyDataModel)
         {
@@ -33,7 +32,7 @@ namespace Game.Enemies
             CanMove = true;// can be changed based on events or other things
             hpText.SetText(Health.ToString());
             triggeredBreachEvent = false;
-            movementAbility = new DownMovement(Speed);
+            MovementAbility = new DownMovement(Speed);
         }
 
         public void ApplyDamage(int damage)
@@ -66,7 +65,7 @@ namespace Game.Enemies
         {
             if (CanMove)
             {
-                movementAbility.Movement(transform);
+                MovementAbility.Movement(transform);
             }
         }
         

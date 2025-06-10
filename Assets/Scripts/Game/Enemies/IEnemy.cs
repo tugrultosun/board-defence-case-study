@@ -1,14 +1,17 @@
+using Game.Movement;
+
 namespace Game.Enemies
 {
     public interface IEnemy
     {
-        public EnemyType EnemyType { get; set; }
+        public EnemyType EnemyType { get; }
         
-        public int Health { get; set; }
+        public int Health { get; }
         
-        public float Speed { get; set; }
+        public float Speed { get; }
         
-        public bool CanMove { get; set; }
+        public bool CanMove { get; }
+        public IMovementAbility MovementAbility { get; }
         
         public void Initialize(EnemyDataModel enemyDataModel);
         
