@@ -26,16 +26,14 @@ namespace Draggable
         public void OnPointerDown(PointerEventData eventData)
         {
             draggableItemCollider.enabled = false;
-            if (assignedTile != null)
-            {
-                assignedTile.ChangeState(typeof(EmptyTileState));
-                assignedTile = null;
-                defender.Deactivate();
-            }
         }
 
         public void OnPointerUp(PointerEventData eventData)
         {
+            if (assignedTile != null)
+            {
+                return;
+            }
             draggableItemCollider.enabled = true;
             var closestTile = GetClosestTile();
             if (closestTile != null)
@@ -53,6 +51,10 @@ namespace Draggable
 
         public void OnDrag(PointerEventData eventData)
         {
+            if (assignedTile != null)
+            {
+                return;
+            }
             var mainCamera = Camera.main;
             if (mainCamera != null)
             {
