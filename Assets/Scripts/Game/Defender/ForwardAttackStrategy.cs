@@ -6,7 +6,7 @@ namespace Game.Defender
 {
     public class ForwardAttackStrategy : IAttackStrategy
     {
-        public int Range { get; set; }
+        public int Range { get; private set; }
 
         private readonly float thresholdForCheckingIfItsInForwardDirection;
         

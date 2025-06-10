@@ -34,7 +34,7 @@ namespace Game.Board
                         var defender = LeanPool.Spawn(defenderPrefab.GetComponent<Defender.Defender>());
                         defender.Initialize(defenderSettings.GetDefender(defenderLevelData.defenderType));
                         defender.transform.position = new Vector3((int)defenderLevelData.defenderType, -1, 0);
-                        defender.GetComponent<DraggableItem>().initialPos = defender.transform.position;
+                        defender.GetComponent<DraggableItem>().InitialPos = defender.transform.position;
                     }
                 }
                 assetLoader.ReleaseAsset(defenderPrefab);

@@ -4,7 +4,7 @@ namespace Game.Defender
 {
     public class AllDirectionAttackStrategy : IAttackStrategy
     {
-        public int Range { get; set; }
+        public int Range { get; private set; }
 
         public AllDirectionAttackStrategy(int range)
         {

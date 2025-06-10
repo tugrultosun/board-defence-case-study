@@ -15,7 +15,7 @@ namespace Draggable
 
         private Tile assignedTile;
 
-        public Vector3 initialPos;
+        public Vector3 InitialPos { get; set; }
         
         private void Awake()
         {
@@ -44,7 +44,7 @@ namespace Draggable
             else
             {
                 assignedTile = null;
-                transform.position = initialPos;
+                transform.position = InitialPos;
                 defender.Deactivate();
             }
         }
